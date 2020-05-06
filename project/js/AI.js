@@ -1,6 +1,6 @@
-/*! 一叶孤舟 | qq:28701884 | 欢迎指教 */
 
-var AI = AI||{};
+
+var AI = AI||{};      //新建AI 
 
 AI.historyTable	=	{};		//历史表
 
@@ -27,6 +27,7 @@ AI.init = function(pace){
 		
 	}
 	 //如果棋谱里面没有，人工智能开始运作
+	 //并记录时间
 	var initTime = new Date().getTime();
 	AI.treeDepth=play.depth;
 	//AI.treeDepth=4;
@@ -43,6 +44,7 @@ AI.init = function(pace){
 	//var val = AI.iterativeSearch(com.arr2Clone(play.map),play.my);
 	if (val&&val.value!=-8888) {
 		var man = play.mans[val.key];
+		//得到现在的时间
 		var nowTime= new Date().getTime();
 		console.log('最佳着法：'+
 										com.createMove(com.arr2Clone(play.map),man.x,man.y,val.x,val.y)+
@@ -57,25 +59,7 @@ AI.init = function(pace){
 	}
 }
 
-//迭代加深搜索着法
-AI.iterativeSearch = function (map, my){
-	var timeOut=100;
-	var initDepth = 1;
-	var maxDepth = 8;
-	AI.treeDepth=0;
-	var initTime = new Date().getTime();
-	var val = {};
-	for (var i=initDepth; i<=maxDepth; i++){
-		var nowTime= new Date().getTime();
-		AI.treeDepth=i;
-		AI.aotuDepth=i;
-		var val = AI.getAlphaBeta(-99999, 99999, AI.treeDepth , map ,my)
-		if (nowTime-initTime > timeOut){
-			return val;
-		}
-	}
-	return false;
-}
+
 
 //取得棋盘上所有棋子
 AI.getMapAllMan = function (map, my){
@@ -93,27 +77,7 @@ AI.getMapAllMan = function (map, my){
 	return mans;
 }
 
-/*
-//取得棋谱所有己方棋子的着法
-AI.getMoves = function (map, my, txtMap){
-	var highMores = [];   //优先级高的着法
-	var manArr = AI.getMapAllMan (map, my);
-	var moves = [];
-	var history=AI.historyTable[txtMap];
-	for (var i=0; i<manArr.length; i++){
-		var man = manArr[i];
-		var val=man.bl(map);
-		for (var n=0; n<val.length; n++){
-			if (history){
-				highMores.push([man.x,man.y,val[n][0],val[n][1],man.key])
-			}else{
-				moves.push([man.x,man.y,val[n][0],val[n][1],man.key])
-			}
-		}
-	}
-	return highMores.concat(moves);
-}
-*/
+
 //取得棋谱所有己方棋子的着法
 AI.getMoves = function (map, my){
 	var manArr = AI.getMapAllMan (map, my);
@@ -142,7 +106,7 @@ AI.getAlphaBeta = function (A, B, depth, map ,my) {
 	//var history=AI.historyTable[txtMap];
 	//	if (history && history.depth >= AI.treeDepth-depth+1){
 	//		return 	history.value*my;
-	//}
+	//}  
 	if (depth == 0) {
 		return {"value":AI.evaluate(map , my)}; //局面评价函数; 
 　	}
@@ -241,19 +205,17 @@ AI.evaluate = function (map,my){
 }
 
 //评估棋局 取得棋盘双方棋子价值差
-AI.evaluate1 = function (map,my){
-	var val=0;
-	for (var i in play.mans){
-		var man=play.mans[i];
-		if (man.isShow){
-			val += man.value[man.y][man.x] * man.my;
-		}
-	}
-	//val+=Math.floor( Math.random() * 10);  //让AI走棋增加随机元素
-	//com.show()
-	//z(val*my)
-	AI.number++;
-	return val*my;
-}
+// AI.evaluate1 = function (map,my){
+// 	var val=0;
+// 	for (var i in play.mans){
+// 		var man=play.mans[i];
+// 		if (man.isShow){
+// 			val += man.value[man.y][man.x] * man.my;
+// 		}
+// 	}
+	
+// 	AI.number++;
+// 	return val*my;
+// }
 
 
