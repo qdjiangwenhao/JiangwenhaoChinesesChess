@@ -204,18 +204,6 @@ AI.evaluate = function (map,my){
 	return val*my;
 }
 
-//评估棋局 取得棋盘双方棋子价值差
-// AI.evaluate1 = function (map,my){
-// 	var val=0;
-// 	for (var i in play.mans){
-// 		var man=play.mans[i];
-// 		if (man.isShow){
-// 			val += man.value[man.y][man.x] * man.my;
-// 		}
-// 	}
-	
-// 	AI.number++;
-// 	return val*my;
-// }
+
 
 
