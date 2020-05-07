@@ -1,5 +1,3 @@
-/*! 一叶孤舟 | qq:28701884 | 欢迎指教 */
-
 var com = com||{};
 
 com.init = function (stype){

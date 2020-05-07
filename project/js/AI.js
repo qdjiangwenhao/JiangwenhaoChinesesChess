@@ -1,5 +1,3 @@
-
-
 var AI = AI||{};      //新建AI 
 
 AI.historyTable	=	{};		//历史表
