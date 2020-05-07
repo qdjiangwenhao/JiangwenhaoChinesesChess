@@ -51,43 +51,6 @@ play.init = function (depth, map){
 	
 	//绑定点击事件
 	com.canvas.addEventListener("click",play.clickCanvas)
-	//clearInterval(play.timer);
-	//com.get("autoPlay").addEventListener("click", function(e) {
-		//clearInterval(play.timer);
-		//play.timer = setInterval("play.AIPlay()",1000);
-	//	play.AIPlay()
-	//})
-	/*
-	com.get("offensivePlay").addEventListener("click", function(e) {
-		play.isOffensive=true;
-		play.isPlay=true ;	
-		com.get("chessRight").style.display = "none";
-		play.init();
-	})
-	
-	com.get("defensivePlay").addEventListener("click", function(e) {
-		play.isOffensive=false;
-		play.isPlay=true ;	
-		com.get("chessRight").style.display = "none";
-		play.init();
-	})
-	*/
-	
-	
-	
-	/*
-	var initTime = new Date().getTime();
-	for (var i=0; i<=100000; i++){
-		
-		var h=""
-		var h=play.map.join();
-		//for (var n in play.mans){
-		//	if (play.mans[n].show) h+=play.mans[n].key+play.mans[n].x+play.mans[n].y
-		//}
-	}
-	var nowTime= new Date().getTime();
-	z([h,nowTime-initTime])
-	*/
 	
 }
 
@@ -129,11 +92,7 @@ play.regret = function (){
 		if (i==pace.length-1){
 			com.showPane(newX ,newY,x,y)	
 		}
-		//} catch (e){
-		//	com.show()
-		//	z([key,p,pace,map])
-			
-		//	}
+		
 	}
 	play.map = map;
 	play.my=1;
