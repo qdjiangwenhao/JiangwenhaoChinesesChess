@@ -1,11 +1,11 @@
-var AI = AI||{};      //新建AI 
+var AI = AI||{};
 
 AI.historyTable	=	{};		//历史表
 
 
 //人工智能初始化
 AI.init = function(pace){
-	var bill = AI.historyBill || com.gambit; //开局库
+	var bill = AI.historyBill || mod.gambit; //开局库
 	if (bill.length){
 		var len=pace.length;
 		var arr=[];
@@ -25,7 +25,6 @@ AI.init = function(pace){
 		
 	}
 	 //如果棋谱里面没有，人工智能开始运作
-	 //并记录时间
 	var initTime = new Date().getTime();
 	AI.treeDepth=play.depth;
 	//AI.treeDepth=4;
@@ -33,19 +32,18 @@ AI.init = function(pace){
 	AI.number=0;
 	AI.setHistoryTable.lenght = 0
 
-	var val=AI.getAlphaBeta(-99999 ,99999, AI.treeDepth, com.arr2Clone(play.map),play.my);
-	//var val = AI.iterativeSearch(com.arr2Clone(play.map),play.my)
+	var val=AI.getAlphaBeta(-99999 ,99999, AI.treeDepth, mod.arr2Clone(play.map),play.my);
+	
 	if (!val||val.value==-8888) {
 		AI.treeDepth=2;
-		val=AI.getAlphaBeta(-99999 ,99999, AI.treeDepth, com.arr2Clone(play.map),play.my);
+		val=AI.getAlphaBeta(-99999 ,99999, AI.treeDepth, mod.arr2Clone(play.map),play.my);
 	}
-	//var val = AI.iterativeSearch(com.arr2Clone(play.map),play.my);
+	
 	if (val&&val.value!=-8888) {
 		var man = play.mans[val.key];
-		//得到现在的时间
 		var nowTime= new Date().getTime();
 		console.log('最佳着法：'+
-										com.createMove(com.arr2Clone(play.map),man.x,man.y,val.x,val.y)+
+										mod.createMove(mod.arr2Clone(play.map),man.x,man.y,val.x,val.y)+
 										' 搜索深度：'+AI.treeDepth+' 搜索分支：'+
 										AI.number+'个  最佳着法评估：'+
 										val.value+'分'+
@@ -104,7 +102,7 @@ AI.getAlphaBeta = function (A, B, depth, map ,my) {
 	//var history=AI.historyTable[txtMap];
 	//	if (history && history.depth >= AI.treeDepth-depth+1){
 	//		return 	history.value*my;
-	//}  
+	//}
 	if (depth == 0) {
 		return {"value":AI.evaluate(map , my)}; //局面评价函数; 
 　	}
@@ -196,12 +194,26 @@ AI.evaluate = function (map,my){
 		}
 	}
 	//val+=Math.floor( Math.random() * 10);  //让AI走棋增加随机元素
-	//com.show()
+	//mod.show()
 	//z(val*my)
 	AI.number++;
 	return val*my;
 }
 
-
+//评估棋局 取得棋盘双方棋子价值差
+AI.evaluate1 = function (map,my){
+	var val=0;
+	for (var i in play.mans){
+		var man=play.mans[i];
+		if (man.isShow){
+			val += man.value[man.y][man.x] * man.my;
+		}
+	}
+	//val+=Math.floor( Math.random() * 10);  //让AI走棋增加随机元素
+	//mod.show()
+	//z(val*my)
+	AI.number++;
+	return val*my;
+}
 
 

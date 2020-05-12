@@ -1,4 +1,6 @@
-com.clasli=[
+
+
+mod.clasli=[
 	{
 		"name":"八卦阵法",
 		"map":[

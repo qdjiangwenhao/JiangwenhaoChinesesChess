@@ -1,33 +1,31 @@
-var com = com||{};
+var mod = mod||{};
 
-com.init = function (stype){
+mod.init = function (stype){
 	
-	com.nowStype= stype || com.getCookie("stype") ||"stype2";
-	var stype = com.stype[com.nowStype];
-	com.width			=	stype.width;		//画布宽度
-	com.height			=	stype.height; 		//画布高度
-	com.spaceX			=	stype.spaceX;		//着点X跨度
-	com.spaceY			=	stype.spaceY;		//着点Y跨度
-	com.pointStartX		=	stype.pointStartX;	//第一个着点X坐标;
-	com.pointStartY		=	stype.pointStartY;	//第一个着点Y坐标;
-	com.page			=	stype.page;			//图片目录
+	mod.nowStype= stype || mod.getCookie("stype") ||"stype2";
+	var stype = mod.stype[mod.nowStype];
+	mod.width			=	stype.width;		//画布宽度
+	mod.height			=	stype.height; 		//画布高度
+	mod.spaceX			=	stype.spaceX;		//着点X跨度
+	mod.spaceY			=	stype.spaceY;		//着点Y跨度
+	mod.pointStartX		=	stype.pointStartX;	//第一个着点X坐标;
+	mod.pointStartY		=	stype.pointStartY;	//第一个着点Y坐标;
+	mod.page			=	stype.page;			//图片目录
 	
-	//com.get("box").style.width = com.width+130+"px";
+	mod.canvas			=	document.getElementById("chess"); //画布
+	mod.ct				=	mod.canvas.getContext("2d") ; 
+	mod.canvas.width	=	mod.width;
+	mod.canvas.height	=	mod.height;
 	
-	com.canvas			=	document.getElementById("chess"); //画布
-	com.ct				=	com.canvas.getContext("2d") ; 
-	com.canvas.width	=	com.width;
-	com.canvas.height	=	com.height;
-	
-	com.childList		=	com.childList||[];
+	mod.childList		=	mod.childList||[];
 
 
-	com.loadImages(com.page);		//载入图片/图片目录
-	//z(com.initMap.join())
+	mod.loadImages(mod.page);		//载入图片/图片目录
+	
 }
 
 //样式
-com.stype = {
+mod.stype = {
 	stype1:{
 		width:325,		//画布宽度
 		height:402, 		//画布高度
@@ -57,74 +55,71 @@ com.stype = {
 	}		
 }
 //获取ID
-com.get = function (id){
+mod.get = function (id){
 	return document.getElementById(id)
 }
 
 window.onload = function(){  
-	com.bg=new com.class.Bg();
-	com.dot = new com.class.Dot();
-	com.pane=new com.class.Pane();
-	com.pane.isShow=false;
+	mod.bg=new mod.class.Bg();
+	mod.dot = new mod.class.Dot();
+	mod.pane=new mod.class.Pane();
+	mod.pane.isShow=false;
 	
-	com.childList=[com.bg,com.dot,com.pane];	
-	com.mans	 ={};		//棋子集合
-	//com.createMans(com.initMap)		//生成棋子	
-	//com.bg.show();
-	//play.init();
+	mod.childList=[mod.bg,mod.dot,mod.pane];	
+	mod.mans	 ={};		//棋子集合
 	
 	//开始对弈
-	com.get("playBtn").addEventListener("click", function(e) {
+	mod.get("playBtn").addEventListener("click", function(e) {
 		play.isPlay=true ;	
 		var depth = parseInt(getRadioValue("depth"), 10) || 3;
 
 		play.init( depth );
-		com.get("chessBox").style.display = "block";
-		com.get("menuBox").style.display = "none";
+		mod.get("chessBox").style.display = "block";
+		mod.get("menuBox").style.display = "none";
 	})
 	
 	//开始挑战
-	com.get("clasliBtn").addEventListener("click", function(e) {
+	mod.get("clasliBtn").addEventListener("click", function(e) {
 		play.isPlay=true ;	
 		var clasli = parseInt(getRadioValue("clasli"), 10) || 0;
-		play.init( 4, com.clasli[clasli].map );
-		com.get("chessBox").style.display = "block";
-		com.get("menuBox").style.display = "none";
+		play.init( 4, mod.clasli[clasli].map );
+		mod.get("chessBox").style.display = "block";
+		mod.get("menuBox").style.display = "none";
 	})
 	
 	
 	
 	
 	// 悔棋
-	com.get("regretBtn").addEventListener("click", function(e) {
+	mod.get("regretBtn").addEventListener("click", function(e) {
 		play.regret();
 	})
 	
 	//返回首页
-	com.get("gohomeBtn").addEventListener("click", function(e) {
-		com.get("chessBox").style.display = "none";
-		com.get("menuBox").style.display = "block";
-		com.get("indexBox").style.display = "block";
-		com.get("menuQj").style.display = "none";
-		com.get("menuDy").style.display = "none";
+	mod.get("gohomeBtn").addEventListener("click", function(e) {
+		mod.get("chessBox").style.display = "none";
+		mod.get("menuBox").style.display = "block";
+		mod.get("indexBox").style.display = "block";
+		mod.get("menuQj").style.display = "none";
+		mod.get("menuDy").style.display = "none";
 	})
 	
 	//返回
-	com.get("menuFh").addEventListener("click", function(e) {
-		com.get("indexBox").style.display = "block";
-		com.get("menuQj").style.display = "none";
-		com.get("menuDy").style.display = "none";
+	mod.get("menuFh").addEventListener("click", function(e) {
+		mod.get("indexBox").style.display = "block";
+		mod.get("menuQj").style.display = "none";
+		mod.get("menuDy").style.display = "none";
 	})
 	
 	//返回关闭
-	com.get("menuGb").addEventListener("click", function(e) {
-		com.get("indexBox").style.display = "block";
-		com.get("menuQj").style.display = "none";
-		com.get("menuDy").style.display = "none";
+	mod.get("menuGb").addEventListener("click", function(e) {
+		mod.get("indexBox").style.display = "block";
+		mod.get("menuQj").style.display = "none";
+		mod.get("menuDy").style.display = "none";
 	})
 	
 	//重新开始棋局
-	com.get("restartBtn").addEventListener("click", function(e) {
+	mod.get("restartBtn").addEventListener("click", function(e) {
 		if (confirm("是否确定要重新开始？")){
 			play.isPlay=true ;	
 			play.init( play.depth,play.nowMap );
@@ -135,34 +130,34 @@ window.onload = function(){
 	
 	
 	//人机对弈
-	com.get("indexDy").addEventListener("click", function(e) {
-		com.get("indexBox").style.display = "none";
-		com.get("menuQj").style.display = "none";
-		com.get("menuDy").style.display = "block";
+	mod.get("indexDy").addEventListener("click", function(e) {
+		mod.get("indexBox").style.display = "none";
+		mod.get("menuQj").style.display = "none";
+		mod.get("menuDy").style.display = "block";
 	})
 	
 	//挑战棋局
-	com.get("indexQj").addEventListener("click", function(e) {
-		com.get("indexBox").style.display = "none";
-		com.get("menuQj").style.display = "block";
-		com.get("menuDy").style.display = "none";
+	mod.get("indexQj").addEventListener("click", function(e) {
+		mod.get("indexBox").style.display = "none";
+		mod.get("menuQj").style.display = "block";
+		mod.get("menuDy").style.display = "none";
 	})
 
 	//换肤
-	com.get("stypeBtn").addEventListener("click", function(e) {
-		var stype =com.nowStype;
+	mod.get("stypeBtn").addEventListener("click", function(e) {
+		var stype =mod.nowStype;
 		if (stype=="stype3") stype="stype2";
 		else if (stype=="stype2") stype="stype1";
 		else if (stype=="stype1") stype="stype3";
-		com.init(stype);
-		com.show();
+		mod.init(stype);
+		mod.show();
 		//play.depth = 4;
 		//play.init();
 		document.cookie="stype=" +stype;
 		clearInterval(timer);
 		var i=0;
 		var timer = setInterval(function (){
-			com.show();
+			mod.show();
 			if (i++>=5) clearInterval(timer);
 		},2000);
 	})
@@ -178,67 +173,67 @@ window.onload = function(){
 		}
 	}
 	
-	com.getData("js/gambit.all.js",
+	mod.getData("js/gambit.all.js",
 		function(data){
-		com.gambit=data.split(" ");
-		AI.historyBill = com.gambit;
+		mod.gambit=data.split(" ");
+		AI.historyBill = mod.gambit;
 	})
 }
 
 //载入图片
-com.loadImages = function(stype){
+mod.loadImages = function(stype){
 	
 	//绘制棋盘
-	com.bgImg = new Image();
-	com.bgImg.src  = "img/"+stype+"/bg.png";
+	mod.bgImg = new Image();
+	mod.bgImg.src  = "img/"+stype+"/bg.png";
 	
 	//提示点
-	com.dotImg = new Image();
-	com.dotImg.src  = "img/"+stype+"/dot.png";
+	mod.dotImg = new Image();
+	mod.dotImg.src  = "img/"+stype+"/dot.png";
 	
 	//棋子
-	for (var i in com.args){
-		com[i] = {};
-		com[i].img = new Image();
-		com[i].img.src = "img/"+stype+"/"+ com.args[i].img +".png";
-		//com[i].img.src = "img/"+stype+"/r_m.png";
+	for (var i in mod.args){
+		mod[i] = {};
+		mod[i].img = new Image();
+		mod[i].img.src = "img/"+stype+"/"+ mod.args[i].img +".png";
+		//mod[i].img.src = "img/"+stype+"/r_m.png";
 	}
 	
 	//棋子外框
-	com.paneImg = new Image();
-	com.paneImg.src  = "img/"+stype+"/r_box.png";
+	mod.paneImg = new Image();
+	mod.paneImg.src  = "img/"+stype+"/r_box.png";
 	
 	document.getElementsByTagName("body")[0].style.background= "url(img/"+stype+"/bg.jpg)";
 	
 }
 
 //显示列表
-com.show = function (){
-	com.ct.clearRect(0, 0, com.width, com.height);  
-	for (var i=0; i<com.childList.length ; i++){
-		com.childList[i].show();
+mod.show = function (){
+	mod.ct.clearRect(0, 0, mod.width, mod.height);  
+	for (var i=0; i<mod.childList.length ; i++){
+		mod.childList[i].show();
 	}
 }
 
 //显示移动的棋子外框
-com.showPane  = function (x,y,newX,newY){
-	com.pane.isShow=true;
-	com.pane.x= x ;
-	com.pane.y= y ;
-	com.pane.newX= newX ;
-	com.pane.newY= newY ;
+mod.showPane  = function (x,y,newX,newY){
+	mod.pane.isShow=true;
+	mod.pane.x= x ;
+	mod.pane.y= y ;
+	mod.pane.newX= newX ;
+	mod.pane.newY= newY ;
 }
 
 //生成map里面有的棋子
-com.createMans = function(map){
+mod.createMans = function(map){
 	for (var i=0; i<map.length; i++){
 		for (var n=0; n<map[i].length; n++){
 			var key = map[i][n];
 			if (key){
-				com.mans[key]=new com.class.Man(key);
-				com.mans[key].x=n;
-				com.mans[key].y=i;
-				com.childList.push(com.mans[key])
+				mod.mans[key]=new mod.class.Man(key);
+				mod.mans[key].x=n;
+				mod.mans[key].y=i;
+				mod.childList.push(mod.mans[key])
 			}
 		}
 	}
@@ -246,7 +241,7 @@ com.createMans = function(map){
 
 
 //debug alert
-com.alert = function (obj,f,n){
+mod.alert = function (obj,f,n){
 	if (typeof obj !== "object") {
 		try{console.log(obj)} catch (e){}
 		//return alert(obj);
@@ -257,12 +252,12 @@ com.alert = function (obj,f,n){
 	//return alert(arr.join(n||"\n\r"));
 }
 
-//com.alert的简写，考虑z变量名最不常用
-var z = com.alert;
+//mod.alert的简写，考虑z变量名最不常用
+var z = mod.alert;
 var l = console.log;
 
 //获取元素距离页面左侧的距离
-com.getDomXY = function (dom){
+mod.getDomXY = function (dom){
 	var left = dom.offsetLeft;
 	var top = dom.offsetTop;
 	var current = dom.offsetParent;
@@ -275,7 +270,7 @@ com.getDomXY = function (dom){
 }
 
 //获得cookie
-com.getCookie = function(name){
+mod.getCookie = function(name){
 	if (document.cookie.length>0){
 		start=document.cookie.indexOf(name + "=")
 		if (start!=-1){ 
@@ -288,7 +283,7 @@ com.getCookie = function(name){
 	return false;
 }
 //二维数组克隆
-com.arr2Clone = function (arr){
+mod.arr2Clone = function (arr){
 	var newArr=[];
 	for (var i=0; i<arr.length ; i++){	
 		newArr[i] = arr[i].slice();
@@ -297,7 +292,7 @@ com.arr2Clone = function (arr){
 }
 
 //ajax载入数据
-com.getData = function (url,fun){
+mod.getData = function (url,fun){
 	var XMLHttpRequestObject=false;
 	if(window.XMLHttpRequest){
 		XMLHttpRequestObject=new XMLHttpRequest();
@@ -318,9 +313,9 @@ com.getData = function (url,fun){
 }
 
 //把坐标生成着法
-com.createMove = function (map,x,y,newX,newY){
+mod.createMove = function (map,x,y,newX,newY){
 	var h="";
-	var man = com.mans[map[y][x]];
+	var man = mod.mans[map[y][x]];
 	h+= man.text;
 	map[newY][newX] = map[y][x];
 	delete map[y][x];
@@ -371,7 +366,7 @@ com.createMove = function (map,x,y,newX,newY){
 	return h;
 }
 
-com.initMap = [
+mod.initMap = [
 	['C0','M0','X0','S0','J0','S1','X1','M1','C1'],
 	[    ,    ,    ,    ,    ,    ,    ,    ,    ],
 	[    ,'P0',    ,    ,    ,    ,    ,'P1',    ],
@@ -384,7 +379,7 @@ com.initMap = [
 	['c0','m0','x0','s0','j0','s1','x1','m1','c1']
 ];
 
-com.keys = {
+mod.keys = {
 	"c0":"c","c1":"c",
 	"m0":"m","m1":"m",
 	"x0":"x","x1":"x",
@@ -403,14 +398,14 @@ com.keys = {
 }
 
 //棋子能走的着点
-com.bylaw ={}
+mod.bylaw ={}
 //车
-com.bylaw.c = function (x,y,map,my){
+mod.bylaw.c = function (x,y,map,my){
 	var d=[];
 	//左侧检索
 	for (var i=x-1; i>= 0; i--){
 		if (map[y][i]) {
-			if (com.mans[map[y][i]].my!=my) d.push([i,y]);
+			if (mod.mans[map[y][i]].my!=my) d.push([i,y]);
 			break
 		}else{
 			d.push([i,y])	
@@ -419,7 +414,7 @@ com.bylaw.c = function (x,y,map,my){
 	//右侧检索
 	for (var i=x+1; i <= 8; i++){
 		if (map[y][i]) {
-			if (com.mans[map[y][i]].my!=my) d.push([i,y]);
+			if (mod.mans[map[y][i]].my!=my) d.push([i,y]);
 			break
 		}else{
 			d.push([i,y])	
@@ -428,7 +423,7 @@ com.bylaw.c = function (x,y,map,my){
 	//上检索
 	for (var i = y-1 ; i >= 0; i--){
 		if (map[i][x]) {
-			if (com.mans[map[i][x]].my!=my) d.push([x,i]);
+			if (mod.mans[map[i][x]].my!=my) d.push([x,i]);
 			break
 		}else{
 			d.push([x,i])	
@@ -437,7 +432,7 @@ com.bylaw.c = function (x,y,map,my){
 	//下检索
 	for (var i = y+1 ; i<= 9; i++){
 		if (map[i][x]) {
-			if (com.mans[map[i][x]].my!=my) d.push([x,i]);
+			if (mod.mans[map[i][x]].my!=my) d.push([x,i]);
 			break
 		}else{
 			d.push([x,i])	
@@ -447,86 +442,86 @@ com.bylaw.c = function (x,y,map,my){
 }
 
 //马
-com.bylaw.m = function (x,y,map,my){
+mod.bylaw.m = function (x,y,map,my){
 	var d=[];
 		//1点
-		if ( y-2>= 0 && x+1<= 8 && !play.map[y-1][x] &&(!com.mans[map[y-2][x+1]] || com.mans[map[y-2][x+1]].my!=my)) d.push([x+1,y-2]);
+		if ( y-2>= 0 && x+1<= 8 && !play.map[y-1][x] &&(!mod.mans[map[y-2][x+1]] || mod.mans[map[y-2][x+1]].my!=my)) d.push([x+1,y-2]);
 		//2点
-		if ( y-1>= 0 && x+2<= 8 && !play.map[y][x+1] &&(!com.mans[map[y-1][x+2]] || com.mans[map[y-1][x+2]].my!=my)) d.push([x+2,y-1]);
+		if ( y-1>= 0 && x+2<= 8 && !play.map[y][x+1] &&(!mod.mans[map[y-1][x+2]] || mod.mans[map[y-1][x+2]].my!=my)) d.push([x+2,y-1]);
 		//4点
-		if ( y+1<= 9 && x+2<= 8 && !play.map[y][x+1] &&(!com.mans[map[y+1][x+2]] || com.mans[map[y+1][x+2]].my!=my)) d.push([x+2,y+1]);
+		if ( y+1<= 9 && x+2<= 8 && !play.map[y][x+1] &&(!mod.mans[map[y+1][x+2]] || mod.mans[map[y+1][x+2]].my!=my)) d.push([x+2,y+1]);
 		//5点
-		if ( y+2<= 9 && x+1<= 8 && !play.map[y+1][x] &&(!com.mans[map[y+2][x+1]] || com.mans[map[y+2][x+1]].my!=my)) d.push([x+1,y+2]);
+		if ( y+2<= 9 && x+1<= 8 && !play.map[y+1][x] &&(!mod.mans[map[y+2][x+1]] || mod.mans[map[y+2][x+1]].my!=my)) d.push([x+1,y+2]);
 		//7点
-		if ( y+2<= 9 && x-1>= 0 && !play.map[y+1][x] &&(!com.mans[map[y+2][x-1]] || com.mans[map[y+2][x-1]].my!=my)) d.push([x-1,y+2]);
+		if ( y+2<= 9 && x-1>= 0 && !play.map[y+1][x] &&(!mod.mans[map[y+2][x-1]] || mod.mans[map[y+2][x-1]].my!=my)) d.push([x-1,y+2]);
 		//8点
-		if ( y+1<= 9 && x-2>= 0 && !play.map[y][x-1] &&(!com.mans[map[y+1][x-2]] || com.mans[map[y+1][x-2]].my!=my)) d.push([x-2,y+1]);
+		if ( y+1<= 9 && x-2>= 0 && !play.map[y][x-1] &&(!mod.mans[map[y+1][x-2]] || mod.mans[map[y+1][x-2]].my!=my)) d.push([x-2,y+1]);
 		//10点
-		if ( y-1>= 0 && x-2>= 0 && !play.map[y][x-1] &&(!com.mans[map[y-1][x-2]] || com.mans[map[y-1][x-2]].my!=my)) d.push([x-2,y-1]);
+		if ( y-1>= 0 && x-2>= 0 && !play.map[y][x-1] &&(!mod.mans[map[y-1][x-2]] || mod.mans[map[y-1][x-2]].my!=my)) d.push([x-2,y-1]);
 		//11点
-		if ( y-2>= 0 && x-1>= 0 && !play.map[y-1][x] &&(!com.mans[map[y-2][x-1]] || com.mans[map[y-2][x-1]].my!=my)) d.push([x-1,y-2]);
+		if ( y-2>= 0 && x-1>= 0 && !play.map[y-1][x] &&(!mod.mans[map[y-2][x-1]] || mod.mans[map[y-2][x-1]].my!=my)) d.push([x-1,y-2]);
 
 	return d;
 }
 
 //相
-com.bylaw.x = function (x,y,map,my){
+mod.bylaw.x = function (x,y,map,my){
 	var d=[];
 	if (my===1){ //红方
 		//4点半
-		if ( y+2<= 9 && x+2<= 8 && !play.map[y+1][x+1] && (!com.mans[map[y+2][x+2]] || com.mans[map[y+2][x+2]].my!=my)) d.push([x+2,y+2]);
+		if ( y+2<= 9 && x+2<= 8 && !play.map[y+1][x+1] && (!mod.mans[map[y+2][x+2]] || mod.mans[map[y+2][x+2]].my!=my)) d.push([x+2,y+2]);
 		//7点半
-		if ( y+2<= 9 && x-2>= 0 && !play.map[y+1][x-1] && (!com.mans[map[y+2][x-2]] || com.mans[map[y+2][x-2]].my!=my)) d.push([x-2,y+2]);
+		if ( y+2<= 9 && x-2>= 0 && !play.map[y+1][x-1] && (!mod.mans[map[y+2][x-2]] || mod.mans[map[y+2][x-2]].my!=my)) d.push([x-2,y+2]);
 		//1点半
-		if ( y-2>= 5 && x+2<= 8 && !play.map[y-1][x+1] && (!com.mans[map[y-2][x+2]] || com.mans[map[y-2][x+2]].my!=my)) d.push([x+2,y-2]);
+		if ( y-2>= 5 && x+2<= 8 && !play.map[y-1][x+1] && (!mod.mans[map[y-2][x+2]] || mod.mans[map[y-2][x+2]].my!=my)) d.push([x+2,y-2]);
 		//10点半
-		if ( y-2>= 5 && x-2>= 0 && !play.map[y-1][x-1] && (!com.mans[map[y-2][x-2]] || com.mans[map[y-2][x-2]].my!=my)) d.push([x-2,y-2]);
+		if ( y-2>= 5 && x-2>= 0 && !play.map[y-1][x-1] && (!mod.mans[map[y-2][x-2]] || mod.mans[map[y-2][x-2]].my!=my)) d.push([x-2,y-2]);
 	}else{
 		//4点半
-		if ( y+2<= 4 && x+2<= 8 && !play.map[y+1][x+1] && (!com.mans[map[y+2][x+2]] || com.mans[map[y+2][x+2]].my!=my)) d.push([x+2,y+2]);
+		if ( y+2<= 4 && x+2<= 8 && !play.map[y+1][x+1] && (!mod.mans[map[y+2][x+2]] || mod.mans[map[y+2][x+2]].my!=my)) d.push([x+2,y+2]);
 		//7点半
-		if ( y+2<= 4 && x-2>= 0 && !play.map[y+1][x-1] && (!com.mans[map[y+2][x-2]] || com.mans[map[y+2][x-2]].my!=my)) d.push([x-2,y+2]);
+		if ( y+2<= 4 && x-2>= 0 && !play.map[y+1][x-1] && (!mod.mans[map[y+2][x-2]] || mod.mans[map[y+2][x-2]].my!=my)) d.push([x-2,y+2]);
 		//1点半
-		if ( y-2>= 0 && x+2<= 8 && !play.map[y-1][x+1] && (!com.mans[map[y-2][x+2]] || com.mans[map[y-2][x+2]].my!=my)) d.push([x+2,y-2]);
+		if ( y-2>= 0 && x+2<= 8 && !play.map[y-1][x+1] && (!mod.mans[map[y-2][x+2]] || mod.mans[map[y-2][x+2]].my!=my)) d.push([x+2,y-2]);
 		//10点半
-		if ( y-2>= 0 && x-2>= 0 && !play.map[y-1][x-1] && (!com.mans[map[y-2][x-2]] || com.mans[map[y-2][x-2]].my!=my)) d.push([x-2,y-2]);
+		if ( y-2>= 0 && x-2>= 0 && !play.map[y-1][x-1] && (!mod.mans[map[y-2][x-2]] || mod.mans[map[y-2][x-2]].my!=my)) d.push([x-2,y-2]);
 	}
 	return d;
 }
 
 //士
-com.bylaw.s = function (x,y,map,my){
+mod.bylaw.s = function (x,y,map,my){
 	var d=[];
 	if (my===1){ //红方
 		//4点半
-		if ( y+1<= 9 && x+1<= 5 && (!com.mans[map[y+1][x+1]] || com.mans[map[y+1][x+1]].my!=my)) d.push([x+1,y+1]);
+		if ( y+1<= 9 && x+1<= 5 && (!mod.mans[map[y+1][x+1]] || mod.mans[map[y+1][x+1]].my!=my)) d.push([x+1,y+1]);
 		//7点半
-		if ( y+1<= 9 && x-1>= 3 && (!com.mans[map[y+1][x-1]] || com.mans[map[y+1][x-1]].my!=my)) d.push([x-1,y+1]);
+		if ( y+1<= 9 && x-1>= 3 && (!mod.mans[map[y+1][x-1]] || mod.mans[map[y+1][x-1]].my!=my)) d.push([x-1,y+1]);
 		//1点半
-		if ( y-1>= 7 && x+1<= 5 && (!com.mans[map[y-1][x+1]] || com.mans[map[y-1][x+1]].my!=my)) d.push([x+1,y-1]);
+		if ( y-1>= 7 && x+1<= 5 && (!mod.mans[map[y-1][x+1]] || mod.mans[map[y-1][x+1]].my!=my)) d.push([x+1,y-1]);
 		//10点半
-		if ( y-1>= 7 && x-1>= 3 && (!com.mans[map[y-1][x-1]] || com.mans[map[y-1][x-1]].my!=my)) d.push([x-1,y-1]);
+		if ( y-1>= 7 && x-1>= 3 && (!mod.mans[map[y-1][x-1]] || mod.mans[map[y-1][x-1]].my!=my)) d.push([x-1,y-1]);
 	}else{
 		//4点半
-		if ( y+1<= 2 && x+1<= 5 && (!com.mans[map[y+1][x+1]] || com.mans[map[y+1][x+1]].my!=my)) d.push([x+1,y+1]);
+		if ( y+1<= 2 && x+1<= 5 && (!mod.mans[map[y+1][x+1]] || mod.mans[map[y+1][x+1]].my!=my)) d.push([x+1,y+1]);
 		//7点半
-		if ( y+1<= 2 && x-1>= 3 && (!com.mans[map[y+1][x-1]] || com.mans[map[y+1][x-1]].my!=my)) d.push([x-1,y+1]);
+		if ( y+1<= 2 && x-1>= 3 && (!mod.mans[map[y+1][x-1]] || mod.mans[map[y+1][x-1]].my!=my)) d.push([x-1,y+1]);
 		//1点半
-		if ( y-1>= 0 && x+1<= 5 && (!com.mans[map[y-1][x+1]] || com.mans[map[y-1][x+1]].my!=my)) d.push([x+1,y-1]);
+		if ( y-1>= 0 && x+1<= 5 && (!mod.mans[map[y-1][x+1]] || mod.mans[map[y-1][x+1]].my!=my)) d.push([x+1,y-1]);
 		//10点半
-		if ( y-1>= 0 && x-1>= 3 && (!com.mans[map[y-1][x-1]] || com.mans[map[y-1][x-1]].my!=my)) d.push([x-1,y-1]);
+		if ( y-1>= 0 && x-1>= 3 && (!mod.mans[map[y-1][x-1]] || mod.mans[map[y-1][x-1]].my!=my)) d.push([x-1,y-1]);
 	}
 	return d;
 		
 }
 
 //将
-com.bylaw.j = function (x,y,map,my){
+mod.bylaw.j = function (x,y,map,my){
 	var d=[];
 	var isNull=(function (y1,y2){
-		var y1=com.mans["j0"].y;
-		var x1=com.mans["J0"].x;
-		var y2=com.mans["J0"].y;
+		var y1=mod.mans["j0"].y;
+		var x1=mod.mans["J0"].x;
+		var y2=mod.mans["J0"].y;
 		for (var i=y1-1; i>y2; i--){
 			if (map[i][x1]) return false;
 		}
@@ -535,29 +530,29 @@ com.bylaw.j = function (x,y,map,my){
 	
 	if (my===1){ //红方
 		//下
-		if ( y+1<= 9  && (!com.mans[map[y+1][x]] || com.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
+		if ( y+1<= 9  && (!mod.mans[map[y+1][x]] || mod.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
 		//上
-		if ( y-1>= 7 && (!com.mans[map[y-1][x]] || com.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
+		if ( y-1>= 7 && (!mod.mans[map[y-1][x]] || mod.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
 		//老将对老将的情况
-		if ( com.mans["j0"].x == com.mans["J0"].x &&isNull) d.push([com.mans["J0"].x,com.mans["J0"].y]);
+		if ( mod.mans["j0"].x == mod.mans["J0"].x &&isNull) d.push([mod.mans["J0"].x,mod.mans["J0"].y]);
 		
 	}else{
 		//下
-		if ( y+1<= 2  && (!com.mans[map[y+1][x]] || com.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
+		if ( y+1<= 2  && (!mod.mans[map[y+1][x]] || mod.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
 		//上
-		if ( y-1>= 0 && (!com.mans[map[y-1][x]] || com.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
+		if ( y-1>= 0 && (!mod.mans[map[y-1][x]] || mod.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
 		//老将对老将的情况
-		if ( com.mans["j0"].x == com.mans["J0"].x &&isNull) d.push([com.mans["j0"].x,com.mans["j0"].y]);
+		if ( mod.mans["j0"].x == mod.mans["J0"].x &&isNull) d.push([mod.mans["j0"].x,mod.mans["j0"].y]);
 	}
 	//右
-	if ( x+1<= 5  && (!com.mans[map[y][x+1]] || com.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
+	if ( x+1<= 5  && (!mod.mans[map[y][x+1]] || mod.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
 	//左
-	if ( x-1>= 3 && (!com.mans[map[y][x-1]] || com.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
+	if ( x-1>= 3 && (!mod.mans[map[y][x-1]] || mod.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
 	return d;
 }
 
 //炮
-com.bylaw.p = function (x,y,map,my){
+mod.bylaw.p = function (x,y,map,my){
 	var d=[];
 	//左侧检索
 	var n=0;
@@ -567,7 +562,7 @@ com.bylaw.p = function (x,y,map,my){
 				n++;
 				continue;
 			}else{
-				if (com.mans[map[y][i]].my!=my) d.push([i,y]);
+				if (mod.mans[map[y][i]].my!=my) d.push([i,y]);
 				break	
 			}
 		}else{
@@ -582,7 +577,7 @@ com.bylaw.p = function (x,y,map,my){
 				n++;
 				continue;
 			}else{
-				if (com.mans[map[y][i]].my!=my) d.push([i,y]);
+				if (mod.mans[map[y][i]].my!=my) d.push([i,y]);
 				break	
 			}
 		}else{
@@ -597,7 +592,7 @@ com.bylaw.p = function (x,y,map,my){
 				n++;
 				continue;
 			}else{
-				if (com.mans[map[i][x]].my!=my) d.push([x,i]);
+				if (mod.mans[map[i][x]].my!=my) d.push([x,i]);
 				break	
 			}
 		}else{
@@ -612,7 +607,7 @@ com.bylaw.p = function (x,y,map,my){
 				n++;
 				continue;
 			}else{
-				if (com.mans[map[i][x]].my!=my) d.push([x,i]);
+				if (mod.mans[map[i][x]].my!=my) d.push([x,i]);
 				break	
 			}
 		}else{
@@ -623,28 +618,28 @@ com.bylaw.p = function (x,y,map,my){
 }
 
 //卒
-com.bylaw.z = function (x,y,map,my){
+mod.bylaw.z = function (x,y,map,my){
 	var d=[];
 	if (my===1){ //红方
 		//上
-		if ( y-1>= 0 && (!com.mans[map[y-1][x]] || com.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
+		if ( y-1>= 0 && (!mod.mans[map[y-1][x]] || mod.mans[map[y-1][x]].my!=my)) d.push([x,y-1]);
 		//右
-		if ( x+1<= 8 && y<=4  && (!com.mans[map[y][x+1]] || com.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
+		if ( x+1<= 8 && y<=4  && (!mod.mans[map[y][x+1]] || mod.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
 		//左
-		if ( x-1>= 0 && y<=4 && (!com.mans[map[y][x-1]] || com.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
+		if ( x-1>= 0 && y<=4 && (!mod.mans[map[y][x-1]] || mod.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
 	}else{
 		//下
-		if ( y+1<= 9  && (!com.mans[map[y+1][x]] || com.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
+		if ( y+1<= 9  && (!mod.mans[map[y+1][x]] || mod.mans[map[y+1][x]].my!=my)) d.push([x,y+1]);
 		//右
-		if ( x+1<= 8 && y>=6  && (!com.mans[map[y][x+1]] || com.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
+		if ( x+1<= 8 && y>=6  && (!mod.mans[map[y][x+1]] || mod.mans[map[y][x+1]].my!=my)) d.push([x+1,y]);
 		//左
-		if ( x-1>= 0 && y>=6 && (!com.mans[map[y][x-1]] || com.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
+		if ( x-1>= 0 && y>=6 && (!mod.mans[map[y][x-1]] || mod.mans[map[y][x-1]].my!=my))d.push([x-1,y]);
 	}
 	
 	return d;
 }
 
-com.value = {
+mod.value = {
 	
 	//车价值
 	c:[
@@ -754,39 +749,39 @@ com.value = {
 }
 
 //黑子为红字价值位置的倒置
-com.value.C = com.arr2Clone(com.value.c).reverse();
-com.value.M = com.arr2Clone(com.value.m).reverse();
-com.value.X = com.value.x;
-com.value.S = com.value.s;
-com.value.J = com.value.j;
-com.value.P = com.arr2Clone(com.value.p).reverse();
-com.value.Z = com.arr2Clone(com.value.z).reverse();
+mod.value.C = mod.arr2Clone(mod.value.c).reverse();
+mod.value.M = mod.arr2Clone(mod.value.m).reverse();
+mod.value.X = mod.value.x;
+mod.value.S = mod.value.s;
+mod.value.J = mod.value.j;
+mod.value.P = mod.arr2Clone(mod.value.p).reverse();
+mod.value.Z = mod.arr2Clone(mod.value.z).reverse();
 
 //棋子们
-com.args={
+mod.args={
 	//红子 中文/图片地址/阵营/权重
-	'c':{text:"车", img:'r_c', my:1 ,bl:"c", value:com.value.c},
-	'm':{text:"马", img:'r_m', my:1 ,bl:"m", value:com.value.m},
-	'x':{text:"相", img:'r_x', my:1 ,bl:"x", value:com.value.x},
-	's':{text:"仕", img:'r_s', my:1 ,bl:"s", value:com.value.s},
-	'j':{text:"将", img:'r_j', my:1 ,bl:"j", value:com.value.j},
-	'p':{text:"炮", img:'r_p', my:1 ,bl:"p", value:com.value.p},
-	'z':{text:"兵", img:'r_z', my:1 ,bl:"z", value:com.value.z},
+	'c':{text:"车", img:'r_c', my:1 ,bl:"c", value:mod.value.c},
+	'm':{text:"马", img:'r_m', my:1 ,bl:"m", value:mod.value.m},
+	'x':{text:"相", img:'r_x', my:1 ,bl:"x", value:mod.value.x},
+	's':{text:"仕", img:'r_s', my:1 ,bl:"s", value:mod.value.s},
+	'j':{text:"将", img:'r_j', my:1 ,bl:"j", value:mod.value.j},
+	'p':{text:"炮", img:'r_p', my:1 ,bl:"p", value:mod.value.p},
+	'z':{text:"兵", img:'r_z', my:1 ,bl:"z", value:mod.value.z},
 	
 	//蓝子
-	'C':{text:"�", img:'b_c', my:-1 ,bl:"c", value:com.value.C},
-	'M':{text:"�R", img:'b_m', my:-1 ,bl:"m", value:com.value.M},
-	'X':{text:"象", img:'b_x', my:-1 ,bl:"x", value:com.value.X},
-	'S':{text:"士", img:'b_s', my:-1 ,bl:"s", value:com.value.S},
-	'J':{text:"帅", img:'b_j', my:-1 ,bl:"j", value:com.value.J},
-	'P':{text:"炮", img:'b_p', my:-1 ,bl:"p", value:com.value.P},
-	'Z':{text:"卒", img:'b_z', my:-1 ,bl:"z", value:com.value.Z}
+	'C':{text:"�", img:'b_c', my:-1 ,bl:"c", value:mod.value.C},
+	'M':{text:"�R", img:'b_m', my:-1 ,bl:"m", value:mod.value.M},
+	'X':{text:"象", img:'b_x', my:-1 ,bl:"x", value:mod.value.X},
+	'S':{text:"士", img:'b_s', my:-1 ,bl:"s", value:mod.value.S},
+	'J':{text:"帅", img:'b_j', my:-1 ,bl:"j", value:mod.value.J},
+	'P':{text:"炮", img:'b_p', my:-1 ,bl:"p", value:mod.value.P},
+	'Z':{text:"卒", img:'b_z', my:-1 ,bl:"z", value:mod.value.Z}
 };
 
-com.class = com.class || {} //类
-com.class.Man = function (key, x, y){
+mod.class = mod.class || {} //类
+mod.class.Man = function (key, x, y){
 	this.pater = key.slice(0,1);
-	var o=com.args[this.pater]
+	var o=mod.args[this.pater]
 	this.x = x||0;   
     this.y = y||0;
 	this.key = key ;
@@ -799,29 +794,29 @@ com.class.Man = function (key, x, y){
 	
 	this.show = function (){
 		if (this.isShow) {
-			com.ct.save();
-			com.ct.globalAlpha = this.alpha;
-			com.ct.drawImage(com[this.pater].img,com.spaceX * this.x + com.pointStartX , com.spaceY *  this.y +com.pointStartY);
-			com.ct.restore(); 
+			mod.ct.save();
+			mod.ct.globalAlpha = this.alpha;
+			mod.ct.drawImage(mod[this.pater].img,mod.spaceX * this.x + mod.pointStartX , mod.spaceY *  this.y +mod.pointStartY);
+			mod.ct.restore(); 
 		}
 	}
 	
 	this.bl = function (map){
 		var map = map || play.map
-		return com.bylaw[o.bl](this.x,this.y,map,this.my)
+		return mod.bylaw[o.bl](this.x,this.y,map,this.my)
 	}
 }
 
-com.class.Bg = function (img, x, y){
+mod.class.Bg = function (img, x, y){
 	this.x = x||0; 
     this.y = y||0;
 	this.isShow = true;
 	
 	this.show = function (){
-		if (this.isShow) com.ct.drawImage(com.bgImg, com.spaceX * this.x,com.spaceY *  this.y);
+		if (this.isShow) mod.ct.drawImage(mod.bgImg, mod.spaceX * this.x,mod.spaceY *  this.y);
 	}
 }
-com.class.Pane = function (img, x, y){
+mod.class.Pane = function (img, x, y){
 	this.x = x||0; 
     this.y = y||0;
 	this.newX = x||0; 
@@ -830,13 +825,13 @@ com.class.Pane = function (img, x, y){
 	
 	this.show = function (){
 		if (this.isShow) {
-			com.ct.drawImage(com.paneImg, com.spaceX * this.x + com.pointStartX , com.spaceY *  this.y + com.pointStartY)
-			com.ct.drawImage(com.paneImg, com.spaceX * this.newX + com.pointStartX  , com.spaceY *  this.newY + com.pointStartY)
+			mod.ct.drawImage(mod.paneImg, mod.spaceX * this.x + mod.pointStartX , mod.spaceY *  this.y + mod.pointStartY)
+			mod.ct.drawImage(mod.paneImg, mod.spaceX * this.newX + mod.pointStartX  , mod.spaceY *  this.newY + mod.pointStartY)
 		}
 	}
 }
 
-com.class.Dot = function (img, x, y){
+mod.class.Dot = function (img, x, y){
 	this.x = x||0; 
     this.y = y||0;
 	this.isShow = true;
@@ -844,10 +839,11 @@ com.class.Dot = function (img, x, y){
 	
 	this.show = function (){
 		for (var i=0; i<this.dots.length;i++){
-			if (this.isShow) com.ct.drawImage(com.dotImg, com.spaceX * this.dots[i][0]+10  + com.pointStartX ,com.spaceY *  this.dots[i][1]+10 + com.pointStartY)
+			if (this.isShow) mod.ct.drawImage(mod.dotImg, mod.spaceX * this.dots[i][0]+10  + mod.pointStartX ,mod.spaceY *  this.dots[i][1]+10 + mod.pointStartY)
 		}
 	}
 }
 
-com.init();
+//启动项目
+mod.init();
 
