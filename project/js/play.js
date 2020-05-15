@@ -21,16 +21,9 @@ play.init = function (depth, map){
 	//清除所有旗子
 	play.mans 			=	mod.mans	= {};
 	
-	//这么搞有点2，以后说不定出啥问题，先放着记着以后改
+	
 	mod.childList.length = 3
-	/*
-	l(mod.childList)
-	for (var i=0; i<mod.childList.length ; i++){
-		var o = mod.childList[i];
-		if (o.pater) mod.childList.splice(i, 1)
-	}
-	l(mod.childList)
-	*/
+	
 	mod.createMans( map )		//生成棋子	
 	mod.bg.show();
 	
