@@ -58,8 +58,10 @@ mod.stype = {
 mod.get = function (id){
 	return document.getElementById(id)
 }
-
+//html文档加载完毕后，立即执行此方法onload
 window.onload = function(){  
+	
+
 	mod.bg=new mod.class.Bg();
 	mod.dot = new mod.class.Dot();
 	mod.pane=new mod.class.Pane();
@@ -67,8 +69,10 @@ window.onload = function(){
 	
 	mod.childList=[mod.bg,mod.dot,mod.pane];	
 	mod.mans	 ={};		//棋子集合
-	
+	//打印
+	this.console.log(mod.mans);
 	//开始对弈
+	//点击事件集合
 	mod.get("playBtn").addEventListener("click", function(e) {
 		play.isPlay=true ;	
 		var depth = parseInt(getRadioValue("depth"), 10) || 3;
@@ -365,7 +369,7 @@ mod.createMove = function (map,x,y,newX,newY){
 	}
 	return h;
 }
-
+//play.js中会调用，initMap的数据
 mod.initMap = [
 	['C0','M0','X0','S0','J0','S1','X1','M1','C1'],
 	[    ,    ,    ,    ,    ,    ,    ,    ,    ],
@@ -379,23 +383,6 @@ mod.initMap = [
 	['c0','m0','x0','s0','j0','s1','x1','m1','c1']
 ];
 
-mod.keys = {
-	"c0":"c","c1":"c",
-	"m0":"m","m1":"m",
-	"x0":"x","x1":"x",
-	"s0":"s","s1":"s",
-	"j0":"j",
-	"p0":"p","p1":"p",
-	"z0":"z","z1":"z","z2":"z","z3":"z","z4":"z","z5":"z",
-	
-	"C0":"c","C1":"C",
-	"M0":"M","M1":"M",
-	"X0":"X","X1":"X",
-	"S0":"S","S1":"S",
-	"J0":"J",
-	"P0":"P","P1":"P",
-	"Z0":"Z","Z1":"Z","Z2":"Z","Z3":"Z","Z4":"Z","Z5":"Z",
-}
 
 //棋子能走的着点
 mod.bylaw ={}
@@ -732,7 +719,7 @@ mod.value = {
 		[ 96,  96,  97, 99,  99, 99,  97,  96,  96]
 	],
 	
-	//卒价值
+	//兵价值
 	z:[
 		[ 9,  9,  9, 11, 13, 11,  9,  9,  9],
 		[19, 24, 34, 42, 44, 42, 34, 24, 19],
