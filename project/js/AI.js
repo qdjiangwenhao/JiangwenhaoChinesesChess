@@ -98,11 +98,7 @@ AI.getMoves = function (map, my){
 }
 //A:当前棋手value/B:对手value/depth：层级
 AI.getAlphaBeta = function (A, B, depth, map ,my) { 
-	//var txtMap= map.join();
-	//var history=AI.historyTable[txtMap];
-	//	if (history && history.depth >= AI.treeDepth-depth+1){
-	//		return 	history.value*my;
-	//}
+	
 	if (depth == 0) {
 		return {"value":AI.evaluate(map , my)}; //局面评价函数; 
 　	}
@@ -176,7 +172,7 @@ AI.getAlphaBeta = function (A, B, depth, map ,my) {
 　return {"key":key,"x":newX,"y":newY,"value":A}; 
 }
 
-//奖着法记录到历史表
+//将着法记录到历史表
 AI.setHistoryTable = function (txtMap,depth,value,my){
 	AI.setHistoryTable.lenght ++;
 	AI.historyTable[txtMap] = {depth:depth,value:value} 
@@ -193,27 +189,11 @@ AI.evaluate = function (map,my){
 			}
 		}
 	}
-	//val+=Math.floor( Math.random() * 10);  //让AI走棋增加随机元素
-	//mod.show()
-	//z(val*my)
+	
 	AI.number++;
 	return val*my;
 }
 
-//评估棋局 取得棋盘双方棋子价值差
-AI.evaluate1 = function (map,my){
-	var val=0;
-	for (var i in play.mans){
-		var man=play.mans[i];
-		if (man.isShow){
-			val += man.value[man.y][man.x] * man.my;
-		}
-	}
-	//val+=Math.floor( Math.random() * 10);  //让AI走棋增加随机元素
-	//mod.show()
-	//z(val*my)
-	AI.number++;
-	return val*my;
-}
+
 
 
